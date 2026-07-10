@@ -1,0 +1,19 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<div style="position:relative">
+			<img id="img" src="hidden_image.png" style="image-rendering:pixelated">
+			<div id="box" style="position:absolute;left:10;top:10;width:1px;height:1px;border:1px solid red"></div>
+		</div>
+		<script>
+			var img = document.getElementById('img')
+			// var rect = img.getBoundingClientRect();
+			img.addEventListener('click', (event) => {
+				var box = document.getElementById('box');
+				box.style.left=(event.layerX-2)+'px';
+				box.style.top=(event.layerY-2)+'px';
+			});
+		</script>
+	</body>
+</html>
