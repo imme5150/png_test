@@ -4,7 +4,7 @@
 	<body>
 		<div style="position:relative">
 			<img id="img" src="hidden_image.png" style="image-rendering:pixelated" width="1600" height="2800">
-			<div id="box" style="position:absolute;left:-99px;top:-99px;width:4px;height:4px;border:1.5px solid red"></div>
+			<div id="box" style="position:absolute;left:-99px;top:-99px;width:3.5px;height:3.5px;border:1.5px solid red"></div>
 		</div>
 		<script>
 			var img = document.getElementById('img')
@@ -12,8 +12,8 @@
 			img.addEventListener('click', (event) => {
 				const zoom = 4;
 				var box = document.getElementById('box');
-				box.style.left=zoom*Math.floor(event.layerX/zoom)-1.5+'px';
-				box.style.top=zoom*Math.floor(event.layerY/zoom)-1.5+'px';
+				box.style.left=zoom*Math.floor(event.layerX/zoom)-1+'px';
+				box.style.top=zoom*Math.floor(event.layerY/zoom)-1+'px';
 			});
 		</script>
 	</body>
