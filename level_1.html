@@ -1,10 +1,104 @@
 <html>
 	<head>
+		<style>
+		/*
+		Source - https://stackoverflow.com/a/78412372␍
+		Posted by Naveen Saini, modified by community. See post 'Timeline' for change history␍
+		Retrieved 2026-07-12, License - CC BY-SA 4.0
+		*/
+		/* Full Screen Popup */
+		.fullscreen-popup {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100vh;
+			background-color: rgba(255, 255, 255);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			box-sizing: border-box;
+		}
+		#close-button {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			padding: 8px 16px;
+			border: none;
+			border-radius: 4px;
+			background-color: #f44336;
+			color: #fff;
+			cursor: pointer;
+		}
+		.popup-content {
+			position: relative;
+			padding: 20px;
+			background-color: #ffffff;
+			border-radius: 8px;
+			text-align: justify;
+			max-width: 80vw; /* Adjust max width for smaller screens */
+			overflow-y: auto; /* Allow vertical scrolling if needed */
+			max-height: 90vh;
+		}
+		.fade {
+			transition: opacity 1s;
+			opacity: 0;
+		}
+
+		/* Media Queries for Responsive Design */
+
+		/* Tablet and Larger Screens */
+		@media screen and (min-width: 768px) {
+			.details-container {
+				grid-template-columns: repeat(2, minmax(300px, 1fr));
+			}
+		}
+
+		/* Mobile Screens */
+		@media screen and (max-width: 767px) {
+			.details-container {
+				grid-template-columns: repeat(1, minmax(100%, 1fr));
+			}
+
+			/* Full Screen Popup Adjustments */
+			.fullscreen-popup {
+				padding: 20px;
+			}
+			#close-button {
+				top: 5px;
+				right: 5px;
+			}
+			.popup {
+				width: 90%;
+				max-width: 90vw;
+			}
+		}
+		</style>
 	</head>
-	<body>
-		<div style="position:relative">
+	<body style="margin:0">
+		<div style="position:relative;top:12vh">
 			<img id="img" src="hidden_image.png" style="image-rendering:pixelated" width="1600" height="2800">
 			<div id="box" style="position:absolute;left:-99px;top:-99px;width:3.5px;height:3.5px;border:1.5px solid red"></div>
+		</div>
+		<div style="position:fixed;top:0;left:0;background-color:#038;color:#FFF;width:100%;height:10vh;font-size:8vh;padding:1vh 5vh;opacity:0.95">
+			Stuff
+		</div>
+		<div style="position:fixed;bottom:0;left:0;background-color:#038;color:#FFF;width:100%;height:10vh;font-size:8vh;padding:1vh 5vh;opacity:0.95">
+			<input type="text" style="line-height:6vh;font-size:5.8vh;outline:1vh;border:1vh;padding:1vh"></input>
+		</div>
+		<!--
+Source - https://stackoverflow.com/a/78412372␍
+Posted by Naveen Saini, modified by community. See post 'Timeline' for change history␍
+Retrieved 2026-07-12, License - CC BY-SA 4.0
+-->
+		<div class="fullscreen-popup" id="popup">
+			<div class="popup-content">
+				<h2>A journey of Wonder and Discovery</h2>
+				<p>The year is 2132.  You are a student of digital archeology and recently unearthed an artifact estimated to be from the year 2020 +/- 10 years.  It is an image, but appears to have other information embeded in it.  Your self-appointed task is to decode and decipher this image.</p>
+				<p>You're on vaccation in a beautiful island resort and you wisely left you fusion powered super computer at home, so you'll have to teach your qPhone how to decode the image.  You know from your studies that flat static images from this era are made up of small squares or dots of color called pixels.</p>
+				<p>You decide to look closely at this image and see if any of the pixels seem like a good place to start decoding.  Zoom and pan with your fingers, mouse, or keyboard (h,l,j,k,CTL++,CTL+-).  Tap, click or press enter when you have located a promissing starting point.</p>
+				<button id="close-button">Close</button>
+			</div>
 		</div>
 		<script>
 			var img = document.getElementById('img')
@@ -15,6 +109,10 @@
 				box.style.left=zoom*Math.floor(event.layerX/zoom)-1+'px';
 				box.style.top=zoom*Math.floor(event.layerY/zoom)-1+'px';
 			});
+			document.getElementById('close-button').addEventListener('click', () => {
+				document.getElementById('popup').classList.add('fade');
+				setTimeout("document.getElementById('popup').style.display='none'",3000)
+      });
 		</script>
 	</body>
 </html>
