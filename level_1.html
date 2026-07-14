@@ -76,8 +76,8 @@
 		</style>
 	</head>
 	<body style="margin:0">
-		<div style="position:relative;top:12vh">
-			<img id="img" src="hidden_image.png" style="image-rendering:pixelated" width="1600" height="2800">
+		<div style="position:relative;top:0;margin:12vh 0">
+			<img id="img" src="hidden_image.png" style="image-rendering:pixelated">
 			<div id="box" style="position:absolute;left:-99px;top:-99px;width:3.5px;height:3.5px;border:1.5px solid red"></div>
 		</div>
 		<div style="position:fixed;top:0;left:0;background-color:#038;color:#FFF;width:100%;height:10vh;font-size:8vh;padding:1vh 5vh;opacity:0.95">
@@ -108,6 +108,17 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 				var box = document.getElementById('box');
 				box.style.left=zoom*Math.floor(event.layerX/zoom)-1+'px';
 				box.style.top=zoom*Math.floor(event.layerY/zoom)-1+'px';
+			});
+			img.addEventListener('wheel', (event) => {
+				if (event.ctrlKey == true) {
+					event.preventDefault()
+						console.log(  event.deltaY, event.deltaX)
+					if (event.deltaY > 0 || event.deltaX) {
+						img.width /=  1.1
+					} else {
+						img.width *= 1.1
+					}
+				}
 			});
 			document.getElementById('close-button').addEventListener('click', () => {
 				document.getElementById('popup').classList.add('fade');
