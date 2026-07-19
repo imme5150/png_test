@@ -2,8 +2,8 @@
 	<head>
 		<style>
 		/*
-		Source - https://stackoverflow.com/a/78412372␍
-		Posted by Naveen Saini, modified by community. See post 'Timeline' for change history␍
+		Source - https://stackoverflow.com/a/78412372
+		Posted by Naveen Saini, modified by community
 		Retrieved 2026-07-12, License - CC BY-SA 4.0
 		*/
 		/* Full Screen Popup */
@@ -46,20 +46,12 @@
 		}
 
 		/* Media Queries for Responsive Design */
-
 		/* Tablet and Larger Screens */
 		@media screen and (min-width: 768px) {
-			.details-container {
-				grid-template-columns: repeat(2, minmax(300px, 1fr));
-			}
 		}
 
 		/* Mobile Screens */
 		@media screen and (max-width: 767px) {
-			.details-container {
-				grid-template-columns: repeat(1, minmax(100%, 1fr));
-			}
-
 			/* Full Screen Popup Adjustments */
 			.fullscreen-popup {
 				padding: 20px;
@@ -76,7 +68,7 @@
 		</style>
 	</head>
 	<body style="margin:0">
-		<div style="position:relative;top:0;margin:12vh 0">
+		<div id="container" style="position:relative;top:0;margin:12vh 0">
 			<img id="img" src="hidden_image.png" style="image-rendering:pixelated">
 			<div id="box" style="position:absolute;left:-99px;top:-99px;width:3.5px;height:3.5px;border:1.5px solid red"></div>
 		</div>
@@ -94,9 +86,9 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 		<div class="fullscreen-popup" id="popup">
 			<div class="popup-content">
 				<h2>A journey of Wonder and Discovery</h2>
-				<p>The year is 2132.  You are a student of digital archeology and recently unearthed an artifact estimated to be from the year 2020 +/- 10 years.  It is an image, but appears to have other information embeded in it.  Your self-appointed task is to decode and decipher this image.</p>
+				<p>The year is 2132.  You are a student of digital archeology and recently unearthed an artifact estimated to be from the year 2020 +/- 10 years.  It is an image, but appears to have other information embeded in it.  Your self-appointed task is to <b>decode and decipher this image.</b></p>
 				<p>You're on vaccation in a beautiful island resort and you wisely left you fusion powered super computer at home, so you'll have to teach your qPhone how to decode the image.  You know from your studies that flat static images from this era are made up of small squares or dots of color called pixels.</p>
-				<p>You decide to look closely at this image and see if any of the pixels seem like a good place to start decoding.  Zoom and pan with your fingers, mouse, or keyboard (h,l,j,k,CTL++,CTL+-).  Tap, click or press enter when you have located a promissing starting point.</p>
+				<p>You decide to look closely at this image and see if any of the pixels seem like a good place to start decoding.  Zoom and pan with your fingers, mouse, or keyboard (h,l,j,k,CTL++,CTL+-).  <b>Tap, click or press enter when you have located a promissing starting point.</b></p>
 				<button id="close-button">Close</button>
 			</div>
 		</div>
@@ -109,17 +101,17 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 				box.style.left=zoom*Math.floor(event.layerX/zoom)-1+'px';
 				box.style.top=zoom*Math.floor(event.layerY/zoom)-1+'px';
 			});
-			img.addEventListener('wheel', (event) => {
+			window.addEventListener('wheel', (event) => {
 				if (event.ctrlKey == true) {
 					event.preventDefault()
-						console.log(  event.deltaY, event.deltaX)
-					if (event.deltaY > 0 || event.deltaX) {
-						img.width /=  1.05
+					var change = 0.01 * (event.deltaY + event.deltaX)
+					if (change > 0) {
+						img.width /=  1 + change
 					} else {
-						img.width *= 1.05
+						img.width *= 1 - change
 					}
 				}
-			});
+			}, {passive: false});
 			document.getElementById('close-button').addEventListener('click', () => {
 				document.getElementById('popup').classList.add('fade');
 				setTimeout("document.getElementById('popup').style.display='none'",3000)
