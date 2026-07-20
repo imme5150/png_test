@@ -93,25 +93,43 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 			</div>
 		</div>
 		<script>
-			var img = document.getElementById('img')
+			const img = document.getElementById('img');
+			const box = document.getElementById('box');
+			const imgWidth = img.width;
+			const imgHeight = img.height;
+			var zoom = 10;
+			var xStart, yStart;
 			// var rect = img.getBoundingClientRect();
 			img.addEventListener('click', (event) => {
-				const zoom = 4;
-				var box = document.getElementById('box');
-				box.style.left=zoom*Math.floor(event.layerX/zoom)-1+'px';
-				box.style.top=zoom*Math.floor(event.layerY/zoom)-1+'px';
+				xStart = Math.floor(event.layerX/zoom);
+				yStart = Math.floor(event.layerY/zoom);
+				drawRectangle();
 			});
 			window.addEventListener('wheel', (event) => {
 				if (event.ctrlKey == true) {
 					event.preventDefault()
+					// var prevZoom = zoom;
 					var change = 0.01 * (event.deltaY + event.deltaX)
 					if (change > 0) {
-						img.width /=  1 + change
+						zoom /=  1 + change
 					} else {
-						img.width *= 1 - change
+						zoom *= 1 - change
 					}
+					img.width = imgWidth * zoom;
+					// event.layerX / prevZoom - event.layerX
+					drawRectangle();
 				}
 			}, {passive: false});
+			function drawRectangle() {
+				if (xStart && yStart) {
+					var borderWidth = 5 + zoom / 4;
+					box.style.width = zoom - 1;
+					box.style.height = zoom - 1;
+					box.style.borderWidth = borderWidth + 'px';
+					box.style.left = zoom * xStart - borderWidth + 1 + 'px';
+					box.style.top = zoom * yStart - borderWidth + 1 + 'px';
+				}
+			}
 			document.getElementById('close-button').addEventListener('click', () => {
 				document.getElementById('popup').classList.add('fade');
 				setTimeout("document.getElementById('popup').style.display='none'",3000)
