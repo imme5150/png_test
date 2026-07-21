@@ -138,12 +138,12 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 					}
 				}, false);
 
-				onScale(img, function(h) {document.getElementById('header').textContent=h})
-
 				el.addEventListener('touchend', function(event) {
 					hypo = undefined;
 				}, false);
 			}
+
+			onScale(img, function(h) {document.getElementById('header').textContent=h})
 
 			function drawRectangle() {
 				if (xStart && yStart) {
