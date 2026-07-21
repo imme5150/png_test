@@ -106,7 +106,7 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 				yStart = Math.floor(event.layerY/zoom);
 				drawRectangle();
 			});
-			img.addEventListener('wheel', (event) => {
+			window.addEventListener('wheel', (event) => {
 				if (event.ctrlKey == true) {
 					event.preventDefault()
 					// var prevZoom = zoom;
@@ -145,8 +145,10 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 				}, false);
 			}
 
-			onScale(img, function(newZoom) {
+			onScale(window, function(newZoom) {
 				document.getElementById('header').textContent=zoom
+				if (newZoom > 150) newZoom = 150;
+				if (newZoom < 1) newZoom = 1;
 				zoom = newZoom;
 				drawRectangle();
 			})
