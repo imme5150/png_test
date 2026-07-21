@@ -116,7 +116,6 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 					} else {
 						zoom *= 1 - change
 					}
-					img.width = imgWidth * zoom;
 					// event.layerX / prevZoom - event.layerX
 					// document.getElementById('header').textContent=zoom
 					drawRectangle();
@@ -137,8 +136,6 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 							hypo = hypo1;
 							startZoom = zoom;
 						}
-					  document.getElementById('header').textContent=startZoom
-						console.log(startZoom)
 						callback(startZoom * hypo1/hypo);
 					}
 				}, false);
@@ -149,11 +146,13 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 			}
 
 			onScale(img, function(newZoom) {
+				document.getElementById('header').textContent=zoom
 				zoom = newZoom;
 				drawRectangle();
 			})
 
 			function drawRectangle() {
+				img.width = imgWidth * zoom;
 				if (xStart && yStart) {
 					var borderWidth = 5 + zoom / 4;
 					box.style.width = zoom - 1;
