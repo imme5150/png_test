@@ -138,7 +138,7 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 						}
 						callback(startZoom * hypo1/hypo);
 					}
-				}, false);
+				}, {passive:false});
 
 				el.addEventListener('touchend', function(event) {
 					hypo = undefined;
@@ -147,13 +147,13 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 
 			onScale(window, function(newZoom) {
 				document.getElementById('header').textContent=zoom
-				if (newZoom > 150) newZoom = 150;
-				if (newZoom < 1) newZoom = 1;
 				zoom = newZoom;
 				drawRectangle();
 			})
 
 			function drawRectangle() {
+				if (zoom > 150) zoom = 150;
+				if (zoom < 1) zoom = 1;
 				img.width = imgWidth * zoom;
 				if (xStart && yStart) {
 					var borderWidth = 5 + zoom / 4;
