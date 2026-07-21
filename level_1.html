@@ -129,6 +129,7 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 
 				el.addEventListener('touchmove', function(event) {
 					if (event.targetTouches.length === 2) {
+						event.preventDefault();
 						let hypo1 = Math.hypot((event.targetTouches[0].pageX - event.targetTouches[1].pageX),
 							(event.targetTouches[0].pageY - event.targetTouches[1].pageY));
 						if (hypo === undefined) {
