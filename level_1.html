@@ -118,11 +118,12 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 					}
 					img.width = imgWidth * zoom;
 					// event.layerX / prevZoom - event.layerX
+					document.getElementById('header').textContent=zoom
 					drawRectangle();
 				}
 			}, {passive: false});
 			// Source - https://stackoverflow.com/a/56381421
-			// Posted by Andrey, modified by community. See post 'Timeline' for change history
+			// Posted by Andrey, modified by community
 			// Retrieved 2026-07-20, License - CC BY-SA 4.0
 			function onScale(el, callback) {
 				let hypo = undefined;
