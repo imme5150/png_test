@@ -118,7 +118,7 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 					}
 					img.width = imgWidth * zoom;
 					// event.layerX / prevZoom - event.layerX
-					document.getElementById('header').textContent=zoom
+					// document.getElementById('header').textContent=zoom
 					drawRectangle();
 				}
 			}, {passive: false});
@@ -137,6 +137,8 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 							hypo = hypo1;
 							startZoom = zoom;
 						}
+					  document.getElementById('header').textContent=startZoom
+						console.log(startZoom)
 						callback(startZoom * hypo1/hypo);
 					}
 				}, false);
