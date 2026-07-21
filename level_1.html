@@ -135,8 +135,9 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 							(event.targetTouches[0].pageY - event.targetTouches[1].pageY));
 						if (hypo === undefined) {
 							hypo = hypo1;
+							startZoom = zoom;
 						}
-						callback(hypo1/hypo);
+						callback(startZoom * hypo1/hypo);
 					}
 				}, false);
 
@@ -145,7 +146,10 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 				}, false);
 			}
 
-			onScale(img, function(h) {document.getElementById('header').textContent=h})
+			onScale(img, function(newZoom) {
+				zoom = newZoom;
+				drawRectangle();
+			})
 
 			function drawRectangle() {
 				if (xStart && yStart) {
