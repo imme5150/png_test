@@ -106,7 +106,7 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 				yStart = Math.floor(event.layerY/zoom);
 				drawRectangle();
 			});
-			window.addEventListener('wheel', (event) => {
+			img.addEventListener('wheel', (event) => {
 				if (event.ctrlKey == true) {
 					event.preventDefault()
 					// var prevZoom = zoom;
