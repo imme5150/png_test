@@ -73,7 +73,7 @@
 			<img id="img" src="hidden_image.png" style="image-rendering:pixelated">
 			<div id="box" style="position:absolute;left:-99px;top:-99px;width:3.5px;height:3.5px;border:1.5px solid red"></div>
 		</div>
-		<div style="position:fixed;top:0;left:0;background-color:#038;color:#FFF;width:100%;height:10vh;font-size:8vh;padding:1vh 5vh;opacity:0.95">
+		<div id="header" style="position:fixed;top:0;left:0;background-color:#038;color:#FFF;width:100%;height:10vh;font-size:8vh;padding:1vh 5vh;opacity:0.95">
 			Stuff
 		</div>
 		<div style="position:fixed;bottom:0;left:0;background-color:#038;color:#FFF;width:100%;height:10vh;font-size:8vh;padding:1vh 5vh;opacity:0.95">
@@ -121,6 +121,30 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 					drawRectangle();
 				}
 			}, {passive: false});
+			// Source - https://stackoverflow.com/a/56381421
+			// Posted by Andrey, modified by community. See post 'Timeline' for change history
+			// Retrieved 2026-07-20, License - CC BY-SA 4.0
+			function onScale(el, callback) {
+				let hypo = undefined;
+
+				el.addEventListener('touchmove', function(event) {
+					if (event.targetTouches.length === 2) {
+						let hypo1 = Math.hypot((event.targetTouches[0].pageX - event.targetTouches[1].pageX),
+							(event.targetTouches[0].pageY - event.targetTouches[1].pageY));
+						if (hypo === undefined) {
+							hypo = hypo1;
+						}
+						callback(hypo1/hypo);
+					}
+				}, false);
+
+				onScale(img, function(h) {document.getElementById('header').textContent=h})
+
+				el.addEventListener('touchend', function(event) {
+					hypo = undefined;
+				}, false);
+			}
+
 			function drawRectangle() {
 				if (xStart && yStart) {
 					var borderWidth = 5 + zoom / 4;
