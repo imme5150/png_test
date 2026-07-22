@@ -88,8 +88,8 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 			<div class="popup-content">
 				<h2 style="text-align:left;font-size:30px">A journey of Wonder and Discovery</h2>
 				<p>The year is 2132.  You are a student of digital archeology and recently unearthed an artifact estimated to be from the year 2020 +/- 10 years.  It is an image, but appears to have other information embeded in it.  Your self-appointed task is to <b>decode and decipher this image.</b></p>
-				<p>You're on vaccation in a beautiful island resort and you wisely left you fusion powered super computer at home, so you'll have to teach your qPhone how to decode the image.  You know from your studies that flat static images from this era are made up of small squares or dots of color called pixels.</p>
-				<p>You decide to look closely at this image and see if any of the pixels seem like a good place to start decoding.  Zoom and pan with your fingers, mouse, or keyboard (h,l,j,k,CTL++,CTL+-).  <b>Tap, click or press enter when you have located a promissing starting point.</b></p>
+				<p>You're on vacation in a beautiful island resort and you wisely left you fusion powered super computer at home, so you'll have to teach your qPhone how to decode the image.  You know from your studies that flat static images from this era are made up of small squares or dots of color called pixels.</p>
+				<p>You decide to look closely at this image and see if any of the pixels seem like a good place to start decoding.  Zoom and pan with your fingers, mouse, or keyboard (h,l,j,k,CTL++,CTL+-).  <b>Tap, click or press enter when you have located a promising starting point.</b></p>
 				<button id="close-button">Close</button>
 			</div>
 		</div>
@@ -102,12 +102,15 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 			var zoom = 1;
 			var xStart, yStart;
 			img.addEventListener('click', (event) => {
+				console.log(event)
+				console.log(zoom)
 				xStart = Math.floor(event.layerX/zoom);
 				yStart = Math.floor(event.layerY/zoom);
 				drawRectangle();
 			});
 			window.addEventListener('wheel', (event) => {
 				if (event.ctrlKey == true) {
+				console.log(event)
 					event.preventDefault()
 					// var prevZoom = zoom;
 					var change = 0.01 * (event.deltaY + event.deltaX)
@@ -117,7 +120,6 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 						zoom *= 1 - change
 					}
 					// event.layerX / prevZoom - event.layerX
-					// document.getElementById('header').textContent=zoom
 					drawRectangle();
 				}
 			}, {passive: false});
@@ -130,6 +132,7 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 				el.addEventListener('touchmove', function(event) {
 					if (event.targetTouches.length === 2) {
 						event.preventDefault();
+						document.getElementById('header').textContent=event.clientX
 						let hypo1 = Math.hypot((event.targetTouches[0].pageX - event.targetTouches[1].pageX),
 							(event.targetTouches[0].pageY - event.targetTouches[1].pageY));
 						if (hypo === undefined) {
