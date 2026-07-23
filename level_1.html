@@ -29,7 +29,7 @@
 		}
 		.popup-content {
 			position: relative;
-			padding-bottom: 50px;
+			padding-bottom: 70px;
 			background-color: #ffffff;
 			border-radius: 8px;
 			text-align: justify;
@@ -129,6 +129,7 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 
 				el.addEventListener('touchmove', function(event) {
 					if (event.targetTouches.length === 2) {
+						console.log(event)
 						event.preventDefault();
 						// document.getElementById('header').textContent=event.targetTouches[0].pageX
 						let hypo1 = Math.hypot((event.targetTouches[0].pageX - event.targetTouches[1].pageX),
