@@ -138,8 +138,8 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 							hypo = hypo1;
 							startZoom = zoom;
 							var imgLoc = img.getBoundingClientRect();
-							center.x = ((event.targetTouches[0].pageX + event.targetTouches[1].pageX)/2 - imgLoc.left) / zoom;
-							center.y = ((event.targetTouches[0].pageY + event.targetTouches[1].pageY)/2 - imgLoc.top) / zoom;
+							center.x = ((event.targetTouches[0].clientX + event.targetTouches[1].clientX)/2 - imgLoc.left) / zoom;
+							center.y = ((event.targetTouches[0].clientY + event.targetTouches[1].clientY)/2 - imgLoc.top) / zoom;
 						}
 						callback(startZoom * hypo1/hypo, center);
 					}
