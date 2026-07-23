@@ -21,15 +21,11 @@
 			font-size: 23px;
 		}
 		#close-button {
-			position: absolute;
-			top: 10px;
-			right: 10px;
 			padding: 8px 16px;
-			border: none;
 			border-radius: 4px;
-			background-color: #f44336;
-			color: #fff;
+			background-color: #2D6;
 			cursor: pointer;
+			float: right;
 		}
 		.popup-content {
 			position: relative;
@@ -57,10 +53,6 @@
 			.fullscreen-popup {
 				padding: 20px;
 			}
-			#close-button {
-				top: 5px;
-				right: 5px;
-			}
 			.popup {
 				width: 90%;
 				max-width: 90vw;
@@ -74,7 +66,7 @@
 			<div id="box" style="position:absolute;left:-99px;top:-99px;width:3.5px;height:3.5px;border:1.5px solid red"></div>
 		</div>
 		<div id="header" style="position:fixed;top:0;left:0;background-color:#038;color:#FFF;width:100%;height:10vh;font-size:8vh;padding:1vh 5vh;opacity:0.95">
-			Stuff
+			Find a good starting pixel
 		</div>
 		<div style="position:fixed;bottom:0;left:0;background-color:#038;color:#FFF;width:100%;height:10vh;font-size:8vh;padding:1vh 5vh;opacity:0.95">
 			<input type="text" style="line-height:6vh;font-size:5.8vh;outline:1vh;border:1vh;padding:1vh"></input>
@@ -87,10 +79,11 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 		<div class="fullscreen-popup" id="popup">
 			<div class="popup-content">
 				<h2 style="text-align:left;font-size:30px">A journey of Wonder and Discovery</h2>
-				<p>The year is 2132.  You are a student of digital archeology and recently unearthed an artifact estimated to be from the year 2020 +/- 10 years.  It is an image, but appears to have other information embeded in it.  Your self-appointed task is to <b>decode and decipher this image.</b></p>
+				<p><b>The year is 2132</b></p>
+				<p>You are a student of digital archeology and recently unearthed an artifact estimated to be from the year 2020 +/- 10 years.  It is an image, but appears to have other information embeded in it.  Your self-appointed task is to <b>decode and decipher this image.</b></p>
 				<p>You're on vacation in a beautiful island resort and you wisely left you fusion powered super computer at home, so you'll have to teach your qPhone how to decode the image.  You know from your studies that flat static images from this era are made up of small squares or dots of color called pixels.</p>
-				<p>You decide to look closely at this image and see if any of the pixels seem like a good place to start decoding.  Zoom and pan with your fingers, mouse, or keyboard (h,l,j,k,CTL++,CTL+-).  <b>Tap, click or press enter when you have located a promising starting point.</b></p>
-				<button id="close-button">Close</button>
+				<p>You decide to look closely at this image and see if any of the pixels seem like a good place to start decoding.  <b>Zoom and pan</b> with your fingers or mouse.  <b>Tap or click when you have located a promising starting point.</b></p>
+				<button id="close-button">Let's Go →</button>
 			</div>
 		</div>
 		<script>
@@ -104,8 +97,6 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 			var zoom = 1;
 			var xStart, yStart;
 			img.addEventListener('click', (event) => {
-				console.log(event)
-				console.log(zoom)
 				xStart = Math.floor(event.layerX/zoom);
 				yStart = Math.floor(event.layerY/zoom);
 				drawRectangle();
@@ -123,10 +114,9 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 					var imgLoc = img.getBoundingClientRect();
 					const centerX = (event.clientX - imgLoc.left) / prevZoom;
 					const newX = zoom * centerX - event.clientX;
-					const centerY = (event.clientY - imgLoc.top + imgMarginTop) / prevZoom;
+					const centerY = (event.clientY - imgLoc.top) / prevZoom;
 					const newY = zoom * centerY - event.clientY;
-					console.log(newY)
-					window.scrollTo(newX, newY);
+					window.scrollTo(newX, newY + imgMarginTop);
 					drawRectangle();
 				}
 			}, {passive: false});
@@ -135,6 +125,7 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 			// Retrieved 2026-07-20, License - CC BY-SA 4.0
 			function onScale(el, callback) {
 				let hypo = undefined;
+				let center = {}
 
 				el.addEventListener('touchmove', function(event) {
 					if (event.targetTouches.length === 2) {
@@ -145,8 +136,11 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 						if (hypo === undefined) {
 							hypo = hypo1;
 							startZoom = zoom;
+							var imgLoc = img.getBoundingClientRect();
+							center.x = ((event.targetTouches[0].pageX + event.targetTouches[1].pageX)/2 - imgLoc.left) / zoom;
+							center.y = ((event.targetTouches[0].pageY + event.targetTouches[1].pageY)/2 - imgLoc.top) / zoom;
 						}
-						callback(startZoom * hypo1/hypo);
+						callback(startZoom * hypo1/hypo, center);
 					}
 				}, {passive:false});
 
@@ -157,6 +151,9 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 
 			onScale(window, function(newZoom) {
 				zoom = newZoom;
+				const newX = zoom * center.x - center.x;
+				const newY = zoom * center.y - center.y;
+				window.scrollTo(newX, newY + imgMarginTop);
 				drawRectangle();
 			})
 
