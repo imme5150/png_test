@@ -95,10 +95,12 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 		</div>
 		<script>
 			const img = document.getElementById('img');
+			img.onload = () => {
+				window.imgWidth = img.width;
+				window.imgHeight = img.height;
+				window.imgMarginTop = parseFloat(window.getComputedStyle(img.parentElement).marginTop);
+			}
 			const box = document.getElementById('box');
-			// TODO - wait for image to load
-			const imgWidth = img.width;
-			const imgHeight = img.height;
 			var zoom = 1;
 			var xStart, yStart;
 			img.addEventListener('click', (event) => {
@@ -110,16 +112,21 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 			});
 			window.addEventListener('wheel', (event) => {
 				if (event.ctrlKey == true) {
-				console.log(event)
 					event.preventDefault()
-					// var prevZoom = zoom;
+					const prevZoom = zoom;
 					var change = 0.01 * (event.deltaY + event.deltaX)
 					if (change > 0) {
 						zoom /=  1 + change
 					} else {
 						zoom *= 1 - change
 					}
-					// event.layerX / prevZoom - event.layerX
+					var imgLoc = img.getBoundingClientRect();
+					const centerX = (event.clientX - imgLoc.left) / prevZoom;
+					const newX = zoom * centerX - event.clientX;
+					const centerY = (event.clientY - imgLoc.top + imgMarginTop) / prevZoom;
+					const newY = zoom * centerY - event.clientY;
+					console.log(newY)
+					window.scrollTo(newX, newY);
 					drawRectangle();
 				}
 			}, {passive: false});
@@ -132,7 +139,7 @@ Retrieved 2026-07-12, License - CC BY-SA 4.0
 				el.addEventListener('touchmove', function(event) {
 					if (event.targetTouches.length === 2) {
 						event.preventDefault();
-						document.getElementById('header').textContent=event.clientX
+						document.getElementById('header').textContent=event.targetTouches[0].pageX
 						let hypo1 = Math.hypot((event.targetTouches[0].pageX - event.targetTouches[1].pageX),
 							(event.targetTouches[0].pageY - event.targetTouches[1].pageY));
 						if (hypo === undefined) {
